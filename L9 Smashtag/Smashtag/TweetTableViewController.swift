@@ -74,8 +74,7 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
             request.fetchTweets { [weak self] newTweets in      // this is off the main queue
                 DispatchQueue.main.async {                      // so we must dispatch back to main queue
                     if request == self?.lastTwitterRequest {
-                        self?.tweets.insert(newTweets, at:0)
-                        self?.tableView.insertSections([0], with: .fade)
+                        self?.insertTweets(newTweets)
                     }
                     self?.refreshControl?.endRefreshing()   // REFRESHING
                 }
@@ -88,6 +87,11 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
     // Added after lecture for REFRESHING
     @IBAction func refresh(_ sender: UIRefreshControl) {
         searchForTweets()
+    }
+    
+    func insertTweets(_ newTweets: [Twitter.Tweet]) {
+        self.tweets.insert(newTweets, at:0)
+        self.tableView.insertSections([0], with: .fade)
     }
     
     // MARK: View Controller Lifecycle
@@ -137,7 +141,7 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate
 
         // get the tweet that is associated with this row
         // that the table view is asking us to provide a UITableViewCell for
-        let tweet: Tweet = tweets[indexPath.section][indexPath.row]
+        let tweet: Twitter.Tweet = tweets[indexPath.section][indexPath.row]
 
         // Configure the cell...
         // the textLabel and detailTextLabel are for non-Custom cells

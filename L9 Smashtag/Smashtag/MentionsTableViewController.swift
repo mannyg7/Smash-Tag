@@ -41,7 +41,7 @@ class MentionsTableViewController: UITableViewController {
         return imagesMentions
     }
     
-    private func setTextMentions(_ tMentions: [Mention]) -> [tweetMention] {
+    private func setTextMentions(_ tMentions: [Twitter.Mention]) -> [tweetMention] {
         var textMentions = [tweetMention]()
         for txt in tMentions {
             textMentions.append(tweetMention.textMention(txt.keyword))

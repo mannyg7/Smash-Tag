@@ -43,8 +43,16 @@ class RecentSearchHistoryTableViewController: UITableViewController {
                 let searchTVCell = sender as? UITableViewCell
             {
                 tweetTableView.searchText = searchTVCell.textLabel?.text
+            } else if identifier == "Show popularity",
+                let popTableView = segue.destination as? PopularityTableViewController,
+                let searchTVCell = sender as? UITableViewCell
+            {
+                popTableView.mention = searchTVCell.textLabel?.text
+                popTableView.container = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
+                popTableView.title = "Popularity for " + (searchTVCell.textLabel?.text ?? "")
             }
         }
+        
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
